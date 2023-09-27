@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}" />
+
+
+</head>
+<body>
+<header>
+                <div class="container">
+      <h1 class="logo"></h1>
+
+      <nav>
+        <ul>
+
+
+
+    {% if user.is_authenticated %}
+
+        <li><a href="{% url 'logout' %}">Log out</a></li>
+        <li><a>Welcome: {{ user.username }}</a></li>
+    {% else %}
+    <li><a  href="{% url 'user_login' %}"><span class="glyphicon glyphicon-user"></span> login</a></li>
+    {% endif%}
+
+</ul>
+       </nav>
+    </div>
+
+</header>
+<div class="login-box">
+
+    {% if registered %}
+    <h1> Thanks for registering </h1>
+    <h2> please login to continue </h2>
+
+<button class = "btn"><a href="{% url 'user_login' %}">LOGIN</a></button>
+
+    {% else %}
+
+    <h1>Register Here </h1>
+    <form enctype="multipart/form-data" method="post">
+
+        {% csrf_token %}
+         <div class="textbox">
+          <i class="fas fa-user"></i>
+            <label for="username">Username:</label>
+        {{ user_form.username }}
+         </div>
+             <div class="textbox">
+    <i class="fa fa-envelope" aria-hidden="true"></i>
+        <label for="password">E-mail:</label>
+                 {{ user_form.email }}
+             </div>
+           <div class="textbox">
+    <i class="fas fa-lock"></i>
+        <label for="password">Password:</label>
+                 {{ user_form.password }}
+             </div>
+        <input type="submit" name="" class="btn" value="Register">
+
+    </form>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
